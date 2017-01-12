@@ -11,6 +11,7 @@ public class Deck : MonoBehaviour{
     //Cards are moved into a stack structure after shuffled for simple removal.
     public void MakeDeck(){
         helperDeck = new Card[TOTAL_CARDS];
+        mainDeck = new Stack(TOTAL_CARDS);
         for (int i = 0; i < TOTAL_CARDS; i++){
             if (i < 10)
                 helperDeck[i] = new SwordCard();

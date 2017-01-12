@@ -67,8 +67,7 @@ public class Board : MonoBehaviour {
                 }
                 _intersection.coordinates = new Vector3(i, 0, j);
                 _intersection.transform.GetComponent<Renderer>().material.color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
-                IntersectionBoardRows.Add(_intersection);
-                
+                IntersectionBoardRows.Add(_intersection);   
          }
          IntersectionBoard.Add(IntersectionBoardRows);
       }

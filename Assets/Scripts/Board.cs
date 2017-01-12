@@ -39,12 +39,12 @@ public class Board : MonoBehaviour {
          for (int j = 0; j < Board_Y; j++) {
             Tile _tile = ((GameObject)Instantiate(
                             TilePrefab,
-                            new Vector3(i - Mathf.Floor(Board_X / 2), 0, -j + Mathf.Floor(Board_X / 2)),
+                            new Vector3(i - Mathf.Floor(Board_X / 2) + 3, 0, -j + Mathf.Floor(Board_X / 2)),
                             Quaternion.Euler(0, 0, 0))).GetComponent<Tile>();
-            // Creates their coordinates
-            _tile.coordinates = new Vector3(i, 0, j);
-            // Add them to the rows
-            TileBoardRows.Add(_tile);
+                // Creates their coordinates
+                _tile.coordinates = new Vector3(i, 0, j);
+                // Add them to the rows
+                TileBoardRows.Add(_tile);
          }
          // Add the rows to the columns 
          TileBoard.Add(TileBoardRows);
@@ -59,60 +59,18 @@ public class Board : MonoBehaviour {
          for (int j = 0; j < Board_Y + 1; j++) {
                 Intersection _intersection = ((GameObject)Instantiate(
                                             IntersectionPrefab,
-                                            new Vector3(i - Mathf.Floor(Board_X / 2) - 0.5f, 0.5f, -j + Mathf.Floor(Board_X / 2) + 0.5f),
+                                            new Vector3(i - Mathf.Floor(Board_X / 2) + 2.5f, 0.455f, -j + Mathf.Floor(Board_X / 2) + 0.5f),
                                             Quaternion.Euler(0, 0, 0))).GetComponent<Intersection>();
                 if (i == 0 || i == 6 || j == 0 || j == 8)
                 {
                     //_intersection.GetComponentInChildren<MeshRenderer>().enabled = false;
                 }
                 _intersection.coordinates = new Vector3(i, 0, j);
+                _intersection.transform.GetComponent<Renderer>().material.color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
                 IntersectionBoardRows.Add(_intersection);
                 
          }
          IntersectionBoard.Add(IntersectionBoardRows);
       }
    }
-
-
-
-   /*
-   // OLD METHOD
-	const int INTERSECTION_ROWS = 9;
-	const int INTERSECTION_COL = 7;
-	const int TILE_ROWS = 8;
-	const int TILE_COL = 6;
-	const int TOTAL_ROWS = INTERSECTION_ROWS + TILE_ROWS;
-
-	Space[][] board;
-
-	// For loop creating jagged array of intersections and squares
-	public Board () {
-		board = new Space[TOTAL_ROWS][];
-		
-		// Loop creating arrays of spaces within board
-		for (int i = 0; i < TOTAL_ROWS; i++) {
-			if ((i % 2) == 0) {
-				board [i] = new Intersection[INTERSECTION_COL];
-
-				for (int j = 0; j < INTERSECTION_COL; j++)
-					board [i] [j] = new Intersection ();
-				
-				if (i == 0 || i == (TOTAL_ROWS - 1)) {
-					for (int j = 0; j < INTERSECTION_COL; j++)
-						board [i] [j].Edge ();
-				} 
-				else {
-					board [i] [0].Edge ();
-					board [i] [INTERSECTION_COL - 1].Edge ();
-				}
-			} 
-			else {
-				board [i] = new Tile[TILE_COL];
-
-				for (int j = 0; j < TILE_COL; j++)
-					board [i] [j] = new Tile ();
-			}
-		}
-	}
-   */
 }

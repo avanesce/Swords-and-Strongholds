@@ -1,29 +1,58 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class Deck : MonoBehaviour{
+    // Editor prefab references
+    public GameObject SwordCardPrefab;
+    public GameObject DiplomacyCardPrefab;
+    public GameObject StrongholdCardPrefab;
+
     const int TOTAL_CARDS = 30;
-    Card[] helperDeck;
-    Stack mainDeck;
+    private float deckHeight = 0.0f;
+    List<Card> deck = new List<Card>();
+
+    void Start()
+    {
+        GenerateDeck();
+    }
+
+    void Update()
+    {
+
+    }
 
     //Initializes deck of cards in order and returns no values.
     //Shuffle() will reorder the cards randomly.
     //Cards are moved into a stack structure after shuffled for simple removal.
-    public void MakeDeck(){
-        helperDeck = new Card[TOTAL_CARDS];
-        mainDeck = new Stack(TOTAL_CARDS);
+    void GenerateDeck(){
+        deckHeight = 0.0f;
+        deck.Clear();
         for (int i = 0; i < TOTAL_CARDS; i++){
-            if (i < 10)
-                helperDeck[i] = new SwordCard();
-            else if (i >= 10 && i < 20)
-                helperDeck[i] = new StrongholdCard();
-            else
-                helperDeck[i] = new DiplomacyCard();
+            Card _card;
+            
+            if (i < 10){
+               _card = ((GameObject)Instantiate(
+                            SwordCardPrefab,
+                            new Vector3(4, deckHeight, 6),
+                            Quaternion.Euler(0, 0, 90))).GetComponent<SwordCard>();
+            }
+            else if (i >= 10 && i < 20){
+                _card = ((GameObject)Instantiate(
+                            DiplomacyCardPrefab,
+                            new Vector3(4, deckHeight, 6),
+                            Quaternion.Euler(0, 0, 90))).GetComponent<DiplomacyCard>();
+            }       
+            else{
+                _card = ((GameObject)Instantiate(
+                            StrongholdCardPrefab,
+                            new Vector3(4, deckHeight, 6),
+                            Quaternion.Euler(0, 0, 90))).GetComponent<StrongholdCard>();
+            }
+            deck.Add(_card);
+            deckHeight += 0.035f;
         }
         Shuffle();
-        for (int i = 0; i < TOTAL_CARDS; i++){
-            mainDeck.Push(helperDeck[i]);
-        }
     }
 
     //Shuffles cards and returns no values.
@@ -37,18 +66,20 @@ public class Deck : MonoBehaviour{
         {
             a = Random.Range(0, 30);
             b = Random.Range(0, 30);
-            temp = helperDeck[a];
-            helperDeck[a] = helperDeck[b];
-            helperDeck[b] = temp;
+            temp = deck[a];
+            deck[a] = deck[b];
+            deck[b] = temp;
         }
         //Debug.Log("Deck contents: "+ helperDeck.ToString());
     }
 
-    //Pops and returns a card off the top of the deck when called.
-    //Should only be called by the GameManager after a card has been played.
-    //Card should be assigned to a player's hand.
+    //Returns the top 'last' (top) card of the deck and destroys it in the deck.
+    //todo: destroy cards that are drawn, taken card will be drawn by another script.
     public Card DrawCard(){
-        return (Card) mainDeck.Pop();
+        deckHeight -= 0.05f;
+        Card temp = deck[deck.Count];
+        deck.RemoveAt(deck.Count);
+        return temp;
     }
 }
 

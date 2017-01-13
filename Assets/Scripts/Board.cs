@@ -3,9 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Board : MonoBehaviour {
-   // Board object
-   public Board GameBoard;
-
    // Editor prefab references
    public GameObject TilePrefab;
    public GameObject IntersectionPrefab;
@@ -22,7 +19,7 @@ public class Board : MonoBehaviour {
    void Start() {
       GenerateTiles();
       GenerateIntersections();
-   }
+    }
 
    // Update is called once per frame
    void Update() {
@@ -61,12 +58,13 @@ public class Board : MonoBehaviour {
                                             IntersectionPrefab,
                                             new Vector3(i - Mathf.Floor(Board_X / 2) + 2.5f, 0.455f, -j + Mathf.Floor(Board_X / 2) + 0.5f),
                                             Quaternion.Euler(0, 0, 0))).GetComponent<Intersection>();
-                if (i == 0 || i == 6 || j == 0 || j == 8)
-                {
-                    //_intersection.GetComponentInChildren<MeshRenderer>().enabled = false;
+                // Disables and marks all intersections on the edges of the board
+                if (i == 0 || i == 6 || j == 0 || j == 8) {
+                    _intersection.Edge();
+                    _intersection.GetComponentInChildren<MeshRenderer>().enabled = false;
                 }
                 _intersection.coordinates = new Vector3(i, 0, j);
-                _intersection.transform.GetComponent<Renderer>().material.color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
+                _intersection.transform.GetComponent<Renderer>().material.color = Color.clear;
                 IntersectionBoardRows.Add(_intersection);   
          }
          IntersectionBoard.Add(IntersectionBoardRows);

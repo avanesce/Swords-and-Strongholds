@@ -2,21 +2,12 @@
 using System.Collections;
 
 public class Card : MonoBehaviour {
-
-	public virtual void PlayCard(Piece piece) {
+    public virtual void PlayCard(Piece piece) {
 		// Specific function of what a card will do when played
 	}
 }
 
-public class SwordCard :Card {
-	void Start () {
-
-	}
-
-	void Update () {
-
-	}
-
+public class SwordCard : Card {
 	// Sword card will allow the player to move in any direction
 	// THEN move either left or right based on first direction
 	// Ex: If they move up or down first then they can move right or left
@@ -58,14 +49,6 @@ public class SwordCard :Card {
 }
 
 public class StrongholdCard :Card {
-	void Start () {
-       
-    }
-
-	void Update () {
-
-	}
-
 	// Stronghold card will place the piece in one of the four surrounding
 	// squares. At that point, the four intersections around that square
 	// will be untraversable
@@ -94,13 +77,6 @@ public class StrongholdCard :Card {
 public class DiplomacyCard :Card {
 	// NOTE: If this card is hovered over then it should highlight the nearest piece
 	// so that the player can undo their move to find a better nearest piece
-	void Start () {
-
-	}
-
-	void Update () {
-
-	}
 
 	// Diplomacy will calculate the nearest piece:
 	// If the piece is a stronghold, then the person playing the card will pick which
